@@ -26,7 +26,7 @@ def gaussian_chirplet(t, alpha1=1., alpha2=0., beta=2., fc=1., phi=0., tau=0.):
 
     y = beta * np.exp(-alpha1 * (t-tau) ** 2 + 1j * 2 * np.pi * fc * (t - tau)
         + 1j * phi + 1j * alpha2 * (t - tau) ** 2)
-    
+
     return y
 
 
@@ -59,13 +59,13 @@ def estimate_gaussian_chirplet_parameters(y, t):
     fs = 1 / dt
 
     # Estimate tau and beta from envelope
-    env = abs(hilbert(y))
+    env = abs(hilbert(abs(y)))
     index = np.argmax(env)
     tau = t[index]
     beta = env[index]
 
     # Estimate phi using tau
-    analytic = hilbert(y)
+    analytic = hilbert(abs(y))
     phi = phase(analytic[index] / beta)
 
     # Estimate center frequency by finding peak in spectrum
